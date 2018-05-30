@@ -8,14 +8,14 @@ const WithExpand = num => WrappedComponent => {
 		}
 
 		state = {
-			visible: num,
-			isToggled: false
+			isToggled: false,
+			visible: num
 		};
 
 		handleClick() {
 			this.setState({
 				isToggled: !this.state.isToggled,
-				visible: this.isToggled === true ? num : 15
+				visible: this.state.isToggled === true ? num : 15
 			});
 		}
 

@@ -21,7 +21,7 @@ class RepoList extends Component {
 				forks: 100
 			}
 		],
-		value: 5
+		value: 15
 	};
 
 	render() {
@@ -46,8 +46,8 @@ class RepoList extends Component {
 								)
 						)}
 					</RepoGrid>
+					{this.props.children}
 				</RepoGridWrapper>
-				{this.props.children}
 			</Fragment>
 		);
 	}

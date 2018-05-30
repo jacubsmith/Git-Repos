@@ -48,7 +48,7 @@ class App extends Component {
 		// const Repos = WithExpand(5)(RepoList);
 
 		// With Both
-		const Repos = WithLoader(WithExpand(6)(RepoList));
+		const Repos = WithLoader(WithExpand(5)(RepoList));
 
 		return <Repos data={this.state.repos} />;
 	}
