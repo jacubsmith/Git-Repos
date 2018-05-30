@@ -26,6 +26,7 @@ class App extends Component {
 						url: html_url
 					}))
 				);
+
 		const repos = await getReactRepositories();
 
 		this.setState({
@@ -44,10 +45,10 @@ class App extends Component {
 		// const Repos = WithLoader(RepoList);
 
 		// With Expand
-		const Repos = WithExpand(5)(RepoList);
+		// const Repos = WithExpand(5)(RepoList);
 
 		// With Both
-		// const Repos = WithLoader(WithExpand(2)(RepoList));
+		const Repos = WithLoader(WithExpand(6)(RepoList));
 
 		return <Repos data={this.state.repos} />;
 	}

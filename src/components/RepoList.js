@@ -20,26 +20,35 @@ class RepoList extends Component {
 				stars: 100,
 				forks: 100
 			}
-		]
+		],
+		value: 5
 	};
 
 	render() {
-		const { data } = this.props;
+		const { data, value } = this.props;
 		return (
-			<RepoGridWrapper>
-				<RepoGrid>
-					<div>🖊️</div>
-					<div>⭐</div>
-					<div>🍴️</div>
-					{data.map((repo, i) => (
-						<Fragment>
-							<div>{repo.name}</div>
-							<div>{repo.stars}</div>
-							<div>{repo.forks}</div>
-						</Fragment>
-					))}
-				</RepoGrid>
-			</RepoGridWrapper>
+			<Fragment>
+				<RepoGridWrapper>
+					<RepoGrid>
+						<div>🖊️</div>
+						<div>⭐</div>
+						<div>🍴️</div>
+						{data.map(
+							(repo, i) =>
+								i <= value ? (
+									<Fragment>
+										<div>{repo.name}</div>
+										<div>{repo.stars}</div>
+										<div>{repo.forks}</div>
+									</Fragment>
+								) : (
+									''
+								)
+						)}
+					</RepoGrid>
+				</RepoGridWrapper>
+				{this.props.children}
+			</Fragment>
 		);
 	}
 }
