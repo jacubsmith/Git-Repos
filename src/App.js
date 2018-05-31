@@ -5,32 +5,35 @@ import WithLoader from './HOC/WithLoader';
 import WithExpand from './HOC/WithExpand';
 import TaskDescription from './TaskDescription';
 
+const SEARCH_ENDPOINT = 'https://api.github.com/search/repositories?q=react';
+
+const getReactRepositories = () =>
+	axios
+		.get(SEARCH_ENDPOINT) // eslint-disable-line
+		.then(result => result.data.items)
+		.then(repos =>
+			repos.map(({ forks, name, stargazers_count, html_url }) => ({
+				forks,
+				name,
+				stars: stargazers_count,
+				url: html_url
+			}))
+		);
+
 class App extends Component {
 	state = {
-		repos: []
+		data: []
 	};
 
-	async componentWillMount() {
-		const SEARCH_ENDPOINT =
-			'https://api.github.com/search/repositories?q=react';
+	componentDidMount() {
+		// Testing the component will acccept data
 
-		const getReactRepositories = () =>
-			axios
-				.get(SEARCH_ENDPOINT) // eslint-disable-line
-				.then(result => result.data.items)
-				.then(repos =>
-					repos.map(({ forks, name, stargazers_count, html_url }) => ({
-						forks,
-						name,
-						stars: stargazers_count,
-						url: html_url
-					}))
-				);
+		const data = Promise.resolve(getReactRepositories());
 
-		const repos = await getReactRepositories();
-
-		this.setState({
-			repos
+		data.then(res => {
+			this.setState({
+				data: res
+			});
 		});
 	}
 
@@ -42,15 +45,17 @@ class App extends Component {
 		// const Repos = RepoList;
 
 		// With Loader
-		// const Repos = WithLoader(RepoList);
+		// const Repos = WithLoader(getReactRepositories())(RepoList);
 
 		// With Expand
-		// const Repos = WithExpand(5)(RepoList);
+		const Repos = WithExpand(5)(RepoList);
 
 		// With Both
-		const Repos = WithLoader(WithExpand(5)(RepoList));
+		// const Repos = WithLoader(getReactRepositories())(WithExpand(5)(RepoList));
 
-		return <Repos data={this.state.repos} />;
+		// return <Repos />;
+		// Repo accepting data
+		return <Repos data={this.state.data} />;
 	}
 }
 

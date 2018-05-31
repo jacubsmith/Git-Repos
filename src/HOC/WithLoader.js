@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const WithLoader = WrappedComponent => {
+const WithLoader = results => WrappedComponent => {
 	return class WithLoader extends Component {
+		state = {
+			data: []
+		};
+
+		componentDidMount() {
+			const data = Promise.resolve(results);
+			data.then(res => {
+				this.setState({
+					data: res
+				});
+			});
+		}
+
 		render() {
-			return this.props.data.length === 0 ? (
+			return this.state.data.length === 0 ? (
 				<Loader>Loading</Loader>
 			) : (
-				<WrappedComponent {...this.props} />
+				<WrappedComponent data={this.state.data} />
 			);
 		}
 	};
@@ -28,9 +41,9 @@ const rotate360 = keyframes`
 const Loader = styled.div`
 	font-size: 10px;
 	margin: 50px auto;
-	text-indent: -9999em;
-	width: 11em;
-	height: 11em;
+	color: transparent;
+	width: 80px;
+	height: 80px;
 	border-radius: 50%;
 	background: #ffffff;
 	background: linear-gradient(
@@ -45,7 +58,7 @@ const Loader = styled.div`
 	&:before {
 		width: 50%;
 		height: 50%;
-		background: #0dc5c1;
+		background: #ff5054;
 		border-radius: 100% 0 0 0;
 		position: absolute;
 		top: 0;
