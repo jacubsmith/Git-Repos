@@ -27,14 +27,12 @@ class App extends Component {
 
 	componentDidMount() {
 		// Testing the component will acccept data
-
-		const data = Promise.resolve(getReactRepositories());
-
-		data.then(res => {
-			this.setState({
-				data: res
-			});
-		});
+		// const data = Promise.resolve(getReactRepositories());
+		// data.then(res => {
+		// 	this.setState({
+		// 		data: res
+		// 	});
+		// });
 	}
 
 	render() {
@@ -45,17 +43,18 @@ class App extends Component {
 		// const Repos = RepoList;
 
 		// With Loader
-		// const Repos = WithLoader(getReactRepositories())(RepoList);
+		const Repos = WithLoader(getReactRepositories())(RepoList);
 
 		// With Expand
-		const Repos = WithExpand(5)(RepoList);
+		// const Repos = WithExpand(5)(RepoList);
 
 		// With Both
 		// const Repos = WithLoader(getReactRepositories())(WithExpand(5)(RepoList));
 
-		// return <Repos />;
+		// Just Repo
+		return <Repos />;
 		// Repo accepting data
-		return <Repos data={this.state.data} />;
+		// return <Repos data={this.state.data} />;
 	}
 }
 
